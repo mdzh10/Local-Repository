@@ -1,0 +1,51 @@
+Server:
+
+sudo apt-get install dpkg-dev  (there maybe lock error so follow this link to fix)
+https://itsfoss.com/could-not-get-lock-error/
+
+sudo apt-get install apache2
+
+sudo mkdir /var/www/html/debs
+sudo chmod 777 /var/www/html/debs
+sudo mkdir /var/www/html/debs/amd64 
+sudo chmod 777 /var/www/html/debs/amd64
+
+sudo gedit ~/bin/mydeb1 (creating bash file and can use any folder or name)
+
+( if gedit command not found then..
+ sudo apt-get install gedit )
+
+#! /bin/bash
+ sudo cp /var/cache/apt/archives/*.deb /var/www/html/debs/amd64
+ cd /var/www/html/debs/amd64
+ dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz
+
+sudo chmod 777 ~/bin/mydeb1 (give permission)
+
+sudo ./mydeb1(run it where mydeb1 exists and run it
+every time a new deb file is added)
+
+to see ip adreess:
+
+sudo apt-get install net-tools
+ip addr
+
+ip address will be shown at the bottom...that ip address will be used as
+source for client
+
+Client :
+
+sudo gedit /etc/apt/sources.list
+(if gedit command not found then
+sudo apt-get install gedit )
+
+deb [trusted=yes] http://192.168.58.129/debs/amd64 ./ (use ur ip address of server)
+**remove or comment out all other sources from client
+
+sudo apt-get update (update every time something new needs to be installed)
+
+then install a package to check if it works (e.g codeblocks which has to be in server) 
+
+
+
+
